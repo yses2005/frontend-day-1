@@ -1,0 +1,33 @@
+@import "scss/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100vh;
+
+  h1,
+  h2 {
+    color: $color-white;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  .resetButton {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
+
+  > div:last-child {
+    margin-top: 20px;
+  }
+}
+
+.row {
+  display: flex;
+}
