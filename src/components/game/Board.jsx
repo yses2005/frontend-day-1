@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Square from "components/game/Square";
 import styles from "components/game/Board.module.scss";
 
 function Board() {
+  const [board, setBoard] = useState(Array(9).fill(null)); // -> [null, null, null, null, null, null, null, null, null]
+  const [nextValue, setNextValue] = useState("O");
+
+  function onClickHandler(i) {
+    if (board[i]) {
+      return;
+    }
+
+    const newBoard = board.slice(); // [...board]
+    newBoard[i] = nextValue;
+    setBoard(newBoard);
+    setNextValue(nextValue === "O" ? "X" : "O");
+  }
+
   function renderSquare(i) {
-    return <Square />;
+    return <Square index={i} value={board[i]} onClick={onClickHandler} />;
   }
 
   return (
     <div className={styles.container}>
-      <h1>Next player: </h1>
+      <h1>Next player: {nextValue}</h1>
       <h2>Winner: </h2>
       <button className={styles.resetButton}>Reset</button>
       <div>
