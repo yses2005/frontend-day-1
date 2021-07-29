@@ -41,11 +41,13 @@ function Board() {
 
 	// useMemo to return a 'memoized' value or a computed value
 	const winner = useMemo(() => {
+		// O(3)
 		for (let i = 0; i < 3; i++) {
 			// check horizontally
 			const baseIndex = i * 3;
 			// const values = ;
 			// grab the first, second, and third square
+			// O(n)
 			let [first, second, third] = valuesArr.slice(baseIndex, baseIndex + 3);
 			console.log(
 				`baseIndex: ${baseIndex}\nfirst: ${first}, second: ${second}, third: ${third}`
@@ -60,6 +62,22 @@ function Board() {
 			if (first && second && third && first === second && second === third)
 				return first;
 		}
+
+		// diagonal checking
+		// slanted from left to right
+		let first = valuesArr[0],
+			second = valuesArr[4],
+			third = valuesArr[8];
+		if (first && second && third && first === second && second === third)
+			return first;
+
+		// slanted from right to left
+		first = valuesArr[2];
+		second = valuesArr[4];
+		third = valuesArr[6];
+		if (first && second && third && first === second && second === third)
+			return first;
+
 		return "";
 	}, [valuesArr]);
 
