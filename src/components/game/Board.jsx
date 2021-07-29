@@ -15,6 +15,9 @@ function Board() {
 			return;
 		}
 
+		// if has winner
+		if (winner !== "") return;
+
 		const valuesArrClone = valuesArr.slice(); // Same as [...valuesArr] to make the state immutable
 		valuesArrClone[i] = nextPlayer; // nextPlayer is the next move so we just update the index with that
 		setValuesArr(valuesArrClone); // To update the valuesArr
@@ -43,14 +46,21 @@ function Board() {
 			const baseIndex = i * 3;
 			// const values = ;
 			// grab the first, second, and third square
-			const [first, second, third] = valuesArr.slice(baseIndex, baseIndex + 3);
+			let [first, second, third] = valuesArr.slice(baseIndex, baseIndex + 3);
 			console.log(
 				`baseIndex: ${baseIndex}\nfirst: ${first}, second: ${second}, third: ${third}`
 			);
 			if (first && second && third && first === second && second === third)
 				return first;
+
+			// vertical checking
+			first = valuesArr[i];
+			second = valuesArr[i + 3];
+			third = valuesArr[i + 6];
+			if (first && second && third && first === second && second === third)
+				return first;
 		}
-		return "Winner winner chicken dinner";
+		return "";
 	}, [valuesArr]);
 
 	return (
