@@ -36,6 +36,23 @@ function Board() {
 		setNextPlayer("O");
 	}
 
+	// useMemo to return a 'memoized' value or a computed value
+	const winner = useMemo(() => {
+		for (let i = 0; i < 3; i++) {
+			// check horizontally
+			const baseIndex = i * 3;
+			// const values = ;
+			// grab the first, second, and third square
+			const [first, second, third] = valuesArr.slice(baseIndex, baseIndex + 3);
+			console.log(
+				`baseIndex: ${baseIndex}\nfirst: ${first}, second: ${second}, third: ${third}`
+			);
+			if (first && second && third && first === second && second === third)
+				return first;
+		}
+		return "Winner winner chicken dinner";
+	}, [valuesArr]);
+
 	return (
 		<div className={styles.container}>
 			<h1>Next player: {nextPlayer}</h1>
