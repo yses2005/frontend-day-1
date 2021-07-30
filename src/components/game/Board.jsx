@@ -7,11 +7,11 @@ import styles from "components/game/Board.module.scss";
 function Board() {
   const [valuesArr, setValuesArr] = useState(Array(9).fill(null)); // Values of the 1st-9th square
   const [nextPlayer, setNextPlayer] = useState("O"); // Initial player aka first player to go is O
-  const [winner, setWinner] = useState("None"); // Winner of the game
+  const [winner, setWinner] = useState(undefined); // Winner of the game
 
   // i parameter - index of the valuesArr we want to change aka the Nth square
   function updateValuesArr(i) {
-    // If the Square we are trying to change already has a value - just return to not overwrite it
+    // If the Square we are trying to change already has a value/winner is set - just return to not overwrite it.
     if (valuesArr[i]) {
       return;
     }
@@ -29,8 +29,10 @@ function Board() {
      * onClick = triggers updateValuesArr when we click on a square
      */
     return <Square i={i} value={valuesArr[i]} onClick={() => {
-      updateValuesArr(i);
-      detectWin(nextPlayer, i);
+      if (winner === undefined) { // If there's no winner yet, execute the functions.
+        updateValuesArr(i);
+        detectWin(nextPlayer, i);
+      }
     }} />;
   }
 
@@ -68,6 +70,9 @@ function Board() {
 
       // Diagonal
 
+      if (isHoriz || isVert) setWinner(player); // If the player won, set the winner.
+
+      // Debug.
       console.log(`isHoriz: ${isHoriz}, isVert: ${isVert}, isDia: ${isDia}`);
     }
   }
@@ -89,7 +94,7 @@ function Board() {
   return (
     <div className={styles.container}>
       <h1>Next player: {nextPlayer}</h1>
-      <h2>Winner: {winner}</h2>
+      <h2>Winner: {winner? winner : "None"}</h2>
       <button className={styles.resetButton}>Reset</button>
       <div>
         <div className={styles.row}>
