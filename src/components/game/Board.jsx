@@ -47,33 +47,20 @@ function Board() {
 
   // Detects the winner of the game.
   function detectWin(player, index) {
-    const count = (valuesArr.filter(element => element === player).length) + 1; // Gets the element's count in the board.
+    const count = (valuesArr.filter(e => e === player).length) + 1; // Gets the element's count in the board.
     if (count >= 3) { // If there are 3 elements, check if it wins the game.
-      const row = getRowIndex(index), col = getColIndex(index); // Gets the player's row and column indices.
-      let isHoriz = true, isVert = true, isDia = true; // Flags as checkers.
+      // Gets the player's row and column indices.
+      const row = getRowIndex(index), col = getColIndex(index);
 
-      // Horizontal
-      for (let i = row; i < row + 3; i++) {
-        if (i !== index && valuesArr[i] !== player) {
-          isHoriz = false;
-          break;
-        }
-      }
-
-      // Vertical
-      for (let i = col; i <= col + 3 * 2; i += 3) {
-        if (i !== index && valuesArr[i] !== player) {
-          isVert = false;
-          break;
-        }
-      }
+      // Gets the horizontal, vertical, and diagonal region of current element. Increments to include the element.
+      const hRegion = ([valuesArr[row], valuesArr[row + 1], valuesArr[row + 2]].filter(e => e === player).length) + 1;
+      const vRegion = ([valuesArr[col], valuesArr[col + 3], valuesArr[col + 3 * 2]].filter(e => e === player).length) + 1;
 
       // Diagonal
-
-      if (isHoriz || isVert) setWinner(player); // If the player won, set the winner.
-
-      // Debug.
-      console.log(`isHoriz: ${isHoriz}, isVert: ${isVert}, isDia: ${isDia}`);
+      const diagonal = [
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
     }
   }
 
