@@ -20,15 +20,6 @@ function Game() {
     setNextPlayer(nextPlayer === "O" ? "X" : "O"); // To swap the next player to X or back to O
   }
 
-  /**
-   * == Additional Functions ==
-   * Below are some functions needed for
-   * the assignment.
-   * 
-   * @author Bianca Arce
-   * @created_date 2021-07-29 20:50
-   */
-
   // Detects the winner of the game.
   function detectWin(player, index) {
     const count = (valuesArr.filter(e => e === player).length) + 1; // Gets the element's count in the board.
