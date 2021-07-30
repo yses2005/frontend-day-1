@@ -1,5 +1,4 @@
 import React from "react";
-
 import styles from "components/game/Square.module.scss";
 
 // See renderSquare from Board.jsx
