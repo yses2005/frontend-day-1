@@ -44,9 +44,31 @@ function Board() {
    */
 
   // Detects the winner of the game.
-  function detectWin(player, i) {
+  function detectWin(player, index) {
     const count = (valuesArr.filter(element => element === player).length) + 1; // Gets the element's count in the board.
     if (count >= 3) { // If there are 3 elements, check if it wins the game.
+      const row = getRowIndex(index), col = getColIndex(index); // Gets the player's row and column indices.
+      let isHoriz = true, isVert = true, isDia = true; // Flags as checkers.
+
+      // Horizontal
+      for (let i = row; i < row + 3; i++) {
+        if (i !== index && valuesArr[i] !== player) {
+          isHoriz = false;
+          break;
+        }
+      }
+
+      // Vertical
+      for (let i = col; i <= col + 3 * 2; i += 3) {
+        if (i !== index && valuesArr[i] !== player) {
+          isVert = false;
+          break;
+        }
+      }
+
+      // Diagonal
+
+      console.log(`isHoriz: ${isHoriz}, isVert: ${isVert}, isDia: ${isDia}`);
     }
   }
 
