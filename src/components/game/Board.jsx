@@ -7,7 +7,7 @@ import styles from "components/game/Board.module.scss";
 function Board() {
   const [valuesArr, setValuesArr] = useState(Array(9).fill(null)); // Values of the 1st-9th square
   const [nextPlayer, setNextPlayer] = useState("O"); // Initial player aka first player to go is O
-  const [winner, setWinner] = useState(undefined); // Winner of the game
+  const [winner, setWinner] = useState(null); // Winner of the game
 
   // i parameter - index of the valuesArr we want to change aka the Nth square
   function updateValuesArr(i) {
@@ -29,7 +29,7 @@ function Board() {
      * onClick = triggers updateValuesArr when we click on a square
      */
     return <Square i={i} value={valuesArr[i]} onClick={() => {
-      if (winner === undefined) { // If there's no winner yet, execute the functions.
+      if (winner === null) { // If there's no winner yet, execute the functions.
         updateValuesArr(i);
         detectWin(nextPlayer, i);
       }
@@ -91,11 +91,18 @@ function Board() {
     }
   }
 
+  // Resets the game.
+  function reset() {
+    setWinner(null); // Resets the winner.
+    setNextPlayer("O"); // Resets the player.
+    setValuesArr(Array(9).fill(null)); // Resets the board.
+  }
+
   return (
     <div className={styles.container}>
       <h1>Next player: {nextPlayer}</h1>
       <h2>Winner: {winner? winner : "None"}</h2>
-      <button className={styles.resetButton}>Reset</button>
+      <button className={styles.resetButton} onClick={reset}>Reset</button>
       <div>
         <div className={styles.row}>
           {renderSquare(0)}
