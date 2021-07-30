@@ -52,15 +52,13 @@ function Board() {
       // Gets the player's row and column indices.
       const row = getRowIndex(index), col = getColIndex(index);
 
-      // Gets the horizontal, vertical, and diagonal region of current element. Increments to include the element.
-      const hRegion = ([valuesArr[row], valuesArr[row + 1], valuesArr[row + 2]].filter(e => e === player).length) + 1;
-      const vRegion = ([valuesArr[col], valuesArr[col + 3], valuesArr[col + 3 * 2]].filter(e => e === player).length) + 1;
+      // Gets the number of Os/Xs in its horizontal, vertical, and diagonal region. Increments to include the current element.
+      const hRegion = [row, row + 1, row + 2].filter(i => valuesArr[i] === player).length + 1;
+      const vRegion = [col, col + 3, col + 3 * 2].filter(i => valuesArr[i] === player).length + 1;
+      const dRegion = getDiagonal(index).filter(i => valuesArr[i] === player).length + 1;
 
-      // Diagonal
-      const diagonal = [
-        [0, 4, 8],
-        [2, 4, 6]
-      ];
+      if (hRegion === 3 || vRegion === 3 || dRegion === 3) setWinner(player); // Set the winner if one of the conditions satisfy.
+      console.log(`Horizontal: ${hRegion}, Vertical: ${vRegion}, Diagonal: ${dRegion}`); // Debug
     }
   }
 
@@ -76,6 +74,14 @@ function Board() {
     for (let i = 0; i < 3; i++) {
       if (index === i || index === (i + 3) || index === (i + 3 * 2)) return i;
     }
+  }
+
+  // Gets the diagonal of an element.
+  function getDiagonal(index) {
+    const diagonal = [ [0, 4, 8], [2, 4, 6] ];
+    for (let i = 0; i < diagonal.length; i++) {
+      if (diagonal[i].includes(index)) return diagonal[i];
+    } return null;
   }
 
   // Resets the game.
