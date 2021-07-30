@@ -55,7 +55,7 @@ function Board() {
       // Gets the number of Os/Xs in its horizontal, vertical, and diagonal region. Increments to include the current element.
       const hRegion = [row, row + 1, row + 2].filter(i => valuesArr[i] === player).length + 1;
       const vRegion = [col, col + 3, col + 3 * 2].filter(i => valuesArr[i] === player).length + 1;
-      const dRegion = getDiagonal(index).filter(i => valuesArr[i] === player).length + 1;
+      const dRegion = getDiagonal(index)? getDiagonal(index).filter(i => valuesArr[i] === player).length + 1 : 1;
 
       if (hRegion === 3 || vRegion === 3 || dRegion === 3) setWinner(player); // Set the winner if one of the conditions satisfy.
       console.log(`Horizontal: ${hRegion}, Vertical: ${vRegion}, Diagonal: ${dRegion}`); // Debug
