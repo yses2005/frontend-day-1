@@ -7,11 +7,35 @@ import styles from "components/game/Board.module.scss";
 function Board() {
   const [valuesArr, setValuesArr] = useState(Array(9).fill(null)); // Values of the 1st-9th square
   const [nextPlayer, setNextPlayer] = useState("O"); // Initial player aka first player to go is O
+  const winner = detectWinner(); // Checks if there is a winner every render
+
+  // To detect winner
+  function detectWinner() {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (valuesArr[a] && valuesArr[a] === valuesArr[b] && valuesArr[a] === valuesArr[c]) {
+        return valuesArr[a];
+      }
+    }
+
+    return null;
+  }
 
   // i parameter - index of the valuesArr we want to change aka the Nth square
   function updateValuesArr(i) {
     // If the Square we are trying to change already has a value - just return to not overwrite it
-    if (valuesArr[i]) {
+    if (detectWinner(valuesArr) || valuesArr[i]) {
       return;
     }
 
@@ -33,7 +57,7 @@ function Board() {
   return (
     <div className={styles.container}>
       <h1>Next player: {nextPlayer}</h1>
-      <h2>Winner: </h2>
+      <h2>Winner: {winner}</h2>
       <button className={styles.resetButton}>Reset</button>
       <div>
         <div className={styles.row}>
