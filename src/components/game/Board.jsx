@@ -32,6 +32,14 @@ function Board() {
     return null;
   }
 
+  // To reset board
+  function reset() {
+    let valuesArrClone = valuesArr.slice(); // To create a copy of valuesArr that we can edit
+    valuesArrClone = []; // To clear the copied array
+    setValuesArr(valuesArrClone); // To update valuesArr and clear the values of the square
+    setNextPlayer("O"); // To reset next player to "O"
+  }
+
   // i parameter - index of the valuesArr we want to change aka the Nth square
   function updateValuesArr(i) {
     // If the Square we are trying to change already has a value - just return to not overwrite it
@@ -58,7 +66,7 @@ function Board() {
     <div className={styles.container}>
       <h1>Next player: {nextPlayer}</h1>
       <h2>Winner: {winner}</h2>
-      <button className={styles.resetButton}>Reset</button>
+      <button className={styles.resetButton} onClick={reset}>Reset</button>
       <div>
         <div className={styles.row}>
           {renderSquare(0)}
